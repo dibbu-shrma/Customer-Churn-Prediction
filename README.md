@@ -186,7 +186,7 @@ http://127.0.0.1:5000
 
 <img width="1900" height="962" alt="Screenshot 2026-07-05 182617" src="https://github.com/user-attachments/assets/19170a2c-32f7-49a7-9e4a-f0f352e72772" />
 
-### SHAP Explanation
+### About Section
 
 <img width="1493" height="972" alt="Screenshot 2026-07-05 182704" src="https://github.com/user-attachments/assets/36f7d34e-674d-44d1-9934-c943282cac7a" />
 
