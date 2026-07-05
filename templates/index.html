@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChurnSense — Customer Retention Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="brand"><span class="dot"></span>ChurnSense</div>
+    <div class="brand-sub">AI-powered retention intelligence</div>
+
+    <nav>
+      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">◈</span>Dashboard</div>
+      <div class="nav-item" data-page="predict"><span class="nav-icon">◇</span>Risk Prediction</div>
+      <div class="nav-item" data-page="performance"><span class="nav-icon">◆</span>Model Performance</div>
+      <div class="nav-item" data-page="about"><span class="nav-icon">◎</span>About</div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="model-status">● Model Ready</div>
+      <div class="status-meta">
+        Model: Logistic Regression<br>
+        Tuned via GridSearchCV<br>
+        C=10, penalty=l1
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- ================= DASHBOARD PAGE ================= -->
+    <div class="page active" id="page-dashboard">
+
+      <div class="hero">
+        <h1>ChurnSense</h1>
+        <p>Explainable customer churn prediction, powered by Logistic Regression + SHAP</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Best Model</div>
+          <div class="stat-value">Log. Reg.</div>
+          <div class="stat-trend">↑ vs 4 other models</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Features Used</div>
+          <div class="stat-value">19</div>
+          <div class="stat-trend">Customer & billing data</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Dataset</div>
+          <div class="stat-value">7,043</div>
+          <div class="stat-trend">Telco customer records</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Explainability</div>
+          <div class="stat-value">SHAP</div>
+          <div class="stat-trend">Per-prediction reasoning</div>
+        </div>
+      </div>
+
+      <div class="section-title">🔍 How ChurnSense Works</div>
+      <div class="step-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-title">Input</div>
+          <div class="step-desc">Enter a customer's account, service, and billing details on the Risk Prediction page.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-title">Preprocess</div>
+          <div class="step-desc">Data is encoded and scaled exactly as it was during model training.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-title">Predict</div>
+          <div class="step-desc">The tuned Logistic Regression model returns a churn probability.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <div class="step-title">Explain</div>
+          <div class="step-desc">SHAP breaks down exactly which factors pushed the prediction up or down.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= RISK PREDICTION PAGE ================= -->
+    <div class="page" id="page-predict">
+      <div class="section-title">◇ Risk Prediction</div>
+
+      <form id="predict-form">
+        <div class="field-section-label">Account</div>
+        <div class="grid">
+          <div class="field">
+            <label>Gender</label>
+            <select name="gender"><option>Female</option><option>Male</option></select>
+          </div>
+          <div class="field">
+            <label>Senior citizen</label>
+            <select name="SeniorCitizen"><option value="0">No</option><option value="1">Yes</option></select>
+          </div>
+          <div class="field">
+            <label>Has partner</label>
+            <select name="Partner"><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="field">
+            <label>Has dependents</label>
+            <select name="Dependents"><option>No</option><option>Yes</option></select>
+          </div>
+          <div class="field">
+            <label>Tenure (months)</label>
+            <input type="number" name="tenure" value="12" min="0">
+          </div>
+          <div class="field">
+            <label>Contract</label>
+            <select name="Contract"><option>Month-to-month</option><option>One year</option><option>Two year</option></select>
+          </div>
+          <div class="field">
+            <label>Paperless billing</label>
+            <select name="PaperlessBilling"><option>Yes</option><option>No</option></select>
+          </div>
+          <div class="field">
+            <label>Payment method</label>
+            <select name="PaymentMethod">
+              <option>Electronic check</option><option>Mailed check</option>
+              <option>Bank transfer (automatic)</option><option>Credit card (automatic)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-section-label">Services</div>
+        <div class="grid">
+          <div class="field"><label>Phone service</label>
+            <select name="PhoneService"><option>Yes</option><option>No</option></select>
+          </div>
+          <div class="field"><label>Multiple lines</label>
+            <select name="MultipleLines"><option>No</option><option>Yes</option><option>No phone service</option></select>
+          </div>
+          <div class="field"><label>Internet service</label>
+            <select name="InternetService"><option>Fiber optic</option><option>DSL</option><option>No</option></select>
+          </div>
+          <div class="field"><label>Online security</label>
+            <select name="OnlineSecurity"><option>No</option><option>Yes</option><option>No internet service</option></select>
+          </div>
+          <div class="field"><label>Online backup</label>
+            <select name="OnlineBackup"><option>No</option><option>Yes</option><option>No internet service</option></select>
+          </div>
+          <div class="field"><label>Device protection</label>
+            <select name="DeviceProtection"><option>No</option><option>Yes</option><option>No internet service</option></select>
+          </div>
+          <div class="field"><label>Tech support</label>
+            <select name="TechSupport"><option>No</option><option>Yes</option><option>No internet service</option></select>
+          </div>
+          <div class="field"><label>Streaming TV</label>
+            <select name="StreamingTV"><option>No</option><option>Yes</option><option>No internet service</option></select>
+          </div>
+          <div class="field"><label>Streaming movies</label>
+            <select name="StreamingMovies"><option>No</option><option>Yes</option><option>No internet service</option></select>
+          </div>
+        </div>
+
+        <div class="field-section-label">Billing</div>
+        <div class="grid">
+          <div class="field"><label>Monthly charges ($)</label>
+            <input type="number" name="MonthlyCharges" value="70.00" step="0.01" min="0">
+          </div>
+          <div class="field"><label>Total charges ($)</label>
+            <input type="number" name="TotalCharges" value="840.00" step="0.01" min="0">
+          </div>
+        </div>
+
+        <button type="submit" id="run-btn">Check churn risk</button>
+      </form>
+
+      <div id="error-box"></div>
+
+      <div id="result">
+        <div class="result-header">
+          <div>
+            <div class="verdict-label">Prediction</div>
+            <div class="verdict" id="verdict-text">—</div>
+          </div>
+          <div class="prob-number" id="prob-number">—</div>
+        </div>
+        <div class="reasons">
+          <div class="heading">What's driving this prediction</div>
+          <div id="reasons-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODEL PERFORMANCE PAGE ================= -->
+    <div class="page" id="page-performance">
+      <div class="section-title">◆ Model Performance Comparison</div>
+
+      <div class="chart-card">
+        <div class="bar-chart" id="perf-chart"></div>
+        <div class="params-note">
+          Winning model: <strong>Logistic Regression</strong>, tuned via <code>GridSearchCV</code>
+          with best params <code>C=10, penalty='l1', solver='liblinear', max_iter=1000</code>.
+          <br><br>
+          <em>Replace the placeholder scores below with your actual metrics from the notebook's model comparison step.</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ABOUT PAGE ================= -->
+    <div class="page" id="page-about">
+      <div class="section-title">◎ About ChurnSense</div>
+
+      <div class="about-card">
+        <h3>Project Overview</h3>
+        <p>ChurnSense is an explainable machine learning system for predicting customer churn.
+        Built on the Telco Customer Churn dataset, it estimates a customer's probability of
+        leaving and explains which factors are driving that prediction using SHAP.</p>
+      </div>
+
+      <div class="about-card">
+        <h3>Technology Stack</h3>
+        <table class="tech-table">
+          <tr><th>Layer</th><th>Technology</th></tr>
+          <tr><td>Frontend</td><td>Custom HTML / CSS / JavaScript</td></tr>
+          <tr><td>Backend</td><td>Flask (Python)</td></tr>
+          <tr><td>ML Model</td><td>Logistic Regression (GridSearchCV-tuned)</td></tr>
+          <tr><td>Explainability</td><td>SHAP (LinearExplainer)</td></tr>
+          <tr><td>Data Processing</td><td>Pandas, NumPy, scikit-learn</td></tr>
+          <tr><td>Deployment</td><td>Render</td></tr>
+        </table>
+      </div>
+
+      <div class="about-card">
+        <h3>Dataset</h3>
+        <p><strong>Source:</strong> Telco Customer Churn Dataset (Kaggle)<br>
+        <strong>Task:</strong> Binary classification (Churn / No Churn)</p>
+      </div>
+
+      <div class="about-card">
+        <h3>⚠️ Disclaimer</h3>
+        <ul class="disclaimer-list">
+          <li>Built for educational and portfolio purposes</li>
+          <li>Predictions reflect patterns in historical data, not guarantees</li>
+          <li>Not a substitute for real business judgment or customer outreach strategy</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
